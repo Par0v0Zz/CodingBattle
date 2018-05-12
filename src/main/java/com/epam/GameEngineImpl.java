@@ -24,6 +24,27 @@ public class GameEngineImpl implements GameEngine {
             }
             System.out.println();
         }
+
+        initialState = gameEngine.parse(byteArray);
+
+        for (int x = 0; x < initialState.length; x++) {
+            for (int y = 0; y < initialState[x].length; y++) {
+                System.out.print(initialState[x][y] + "\t");
+            }
+            System.out.println();
+        }
+    }
+
+    private boolean[][] parse(byte[][] byteArray) {
+        boolean[][] array = new boolean[byteArray.length][byteArray[0].length];
+        for (int x = 0; x < array.length; x++) {
+            for (int y = 0; y < array[x].length; y++) {
+                if(byteArray[x][y] > 100){
+                    array[x][y] = true;
+                }
+            }
+        }
+        return array;
     }
 
     private byte[][] parse(boolean[][] array) {
@@ -36,15 +57,15 @@ public class GameEngineImpl implements GameEngine {
         for (int x = 0; x < array.length; x++) {
             for (int y = 0; y < array[x].length; y++) {
                 if (array[x][y] == true) {
-                    byteArray[x][y]+=100;
-                    incrementNeighbor(byteArray, x-1, y-1, height,weight);
-                    incrementNeighbor(byteArray, x, y-1, height,weight);
-                    incrementNeighbor(byteArray, x+1, y-1, height,weight);
-                    incrementNeighbor(byteArray, x-1, y, height,weight);
-                    incrementNeighbor(byteArray, x+1, y, height,weight);
-                    incrementNeighbor(byteArray, x-1, y+1, height,weight);
-                    incrementNeighbor(byteArray, x, y+1, height,weight);
-                    incrementNeighbor(byteArray, x+1, y+1, height,weight);
+                    byteArray[x][y] += 100;
+                    incrementNeighbor(byteArray, x - 1, y - 1, height, weight);
+                    incrementNeighbor(byteArray, x, y - 1, height, weight);
+                    incrementNeighbor(byteArray, x + 1, y - 1, height, weight);
+                    incrementNeighbor(byteArray, x - 1, y, height, weight);
+                    incrementNeighbor(byteArray, x + 1, y, height, weight);
+                    incrementNeighbor(byteArray, x - 1, y + 1, height, weight);
+                    incrementNeighbor(byteArray, x, y + 1, height, weight);
+                    incrementNeighbor(byteArray, x + 1, y + 1, height, weight);
                 }
             }
         }
@@ -52,9 +73,9 @@ public class GameEngineImpl implements GameEngine {
         return byteArray;
     }
 
-    private void incrementNeighbor(byte[][] arr, int currentX, int currentY, int height, int weight){
-        int neighborX = (currentX < 0 ? height-1 : currentX == height ? 0 : currentX);
-        int neighborY = (currentY < 0 ? weight-1 : currentY == weight ? 0 : currentY);
+    private void incrementNeighbor(byte[][] arr, int currentX, int currentY, int height, int weight) {
+        int neighborX = (currentX < 0 ? height - 1 : currentX == height ? 0 : currentX);
+        int neighborY = (currentY < 0 ? weight - 1 : currentY == weight ? 0 : currentY);
         arr[neighborX][neighborY]++;
     }
 
