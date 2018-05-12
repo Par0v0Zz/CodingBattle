@@ -2,11 +2,6 @@ package com.epam;
 
 public class GameEngineImpl implements GameEngine {
 
-    @Override
-    public boolean[][] compute(boolean[][] initialState, int numberIterations) {
-        return new boolean[0][];
-    }
-
     public static void main(String[] args) {
         GameEngineImpl gameEngine = new GameEngineImpl();
         boolean[][] initialState = {
@@ -18,12 +13,23 @@ public class GameEngineImpl implements GameEngine {
         };
 
         byte[][] byteArray = gameEngine.parse(initialState);
+
+
         for (int x = 0; x < byteArray.length; x++) {
             for (int y = 0; y < byteArray[x].length; y++) {
                 System.out.print(byteArray[x][y] + "\t");
             }
             System.out.println();
         }
+    }
+
+    @Override
+    public boolean[][] compute(boolean[][] initialState, int numberIterations) {
+        byte[][] startState = parse(initialState);
+
+        byte[][] resultState = MatrixIterator.iterateMatrix(startState, numberIterations);
+
+        return parse(resultState);
     }
 
     private boolean[][] parse(byte[][] byteArray) {

@@ -2,9 +2,9 @@ package com.epam;
 
 public class MatrixIterator {
 
-    private byte[][] resultState;
+    private static byte[][] resultState;
 
-    public byte[][] iterateMatrix(byte[][] startState, int iterations) {
+    public static byte[][] iterateMatrix(byte[][] startState, int iterations) {
 
         resultState = startState.clone();
 
@@ -16,7 +16,7 @@ public class MatrixIterator {
         return resultState;
     }
 
-    private void iterate(byte[][] startState) {
+    private static void iterate(byte[][] startState) {
         for (int i = 0; i < startState.length; i++) {
             for (int j = 0; j < startState[0].length; j++) {
                 if (startState[i][j] == 3) {
@@ -54,7 +54,7 @@ public class MatrixIterator {
         }
     }
 
-    private void decrementNeighbor(int currentX, int currentY) {
+    private static void decrementNeighbor(int currentX, int currentY) {
         int length = resultState.length - 1;
         int heigth = resultState[0].length - 1;
         int neighborX = (currentX < 0 ? length - 1 : currentX == length ? 0 : currentX);
@@ -62,7 +62,7 @@ public class MatrixIterator {
         resultState[neighborX][neighborY]--;
     }
 
-    private void incrementNeighbor(int currentX, int currentY) {
+    private static void incrementNeighbor(int currentX, int currentY) {
         int length = resultState.length - 1;
         int heigth = resultState[0].length - 1;
         int neighborX = (currentX < 0 ? length - 1 : currentX == length ? 0 : currentX);
