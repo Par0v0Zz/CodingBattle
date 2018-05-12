@@ -2,7 +2,7 @@ package com.epam;
 
 public class MatrixIterator {
 
-    byte[][] resultState;
+    private byte[][] resultState;
 
     public byte[][] iterateMatrix(byte[][] startState, int iterations) {
 
@@ -13,7 +13,7 @@ public class MatrixIterator {
             startState = resultState.clone();
         }
 
-        return null;
+        return resultState;
     }
 
     private void iterate(byte[][] startState) {
@@ -21,37 +21,52 @@ public class MatrixIterator {
             for (int j = 0; j < startState[0].length; j++) {
                 if (startState[i][j] == 3) {
                     resultState[i][j] += 100;
-                    incrementNeighbours(i, j);
+                    incrementNeighbor(i - 1, j - 1);
+                    incrementNeighbor(i, j - 1);
+                    incrementNeighbor(i + 1, j - 1);
+                    incrementNeighbor(i - 1, j);
+                    incrementNeighbor(i + 1, j);
+                    incrementNeighbor(i - 1, j + 1);
+                    incrementNeighbor(i, j + 1);
+                    incrementNeighbor(i + 1, j + 1);
                 } else if (startState[i][j] > 103) {
                     resultState[i][j] -= 100;
-                    decrementNeighbours(i, j);
+                    decrementNeighbor(i - 1, j - 1);
+                    decrementNeighbor(i, j - 1);
+                    decrementNeighbor(i + 1, j - 1);
+                    decrementNeighbor(i - 1, j);
+                    decrementNeighbor(i + 1, j);
+                    decrementNeighbor(i - 1, j + 1);
+                    decrementNeighbor(i, j + 1);
+                    decrementNeighbor(i + 1, j + 1);
                 } else if (startState[i][j] > 100 && startState[i][j] < 102) {
                     resultState[i][j] -= 100;
-                    decrementNeighbours(i, j);
+                    decrementNeighbor(i - 1, j - 1);
+                    decrementNeighbor(i, j - 1);
+                    decrementNeighbor(i + 1, j - 1);
+                    decrementNeighbor(i - 1, j);
+                    decrementNeighbor(i + 1, j);
+                    decrementNeighbor(i - 1, j + 1);
+                    decrementNeighbor(i, j + 1);
+                    decrementNeighbor(i + 1, j + 1);
                 }
             }
         }
     }
 
-    private void decrementNeighbours(int i, int j) {
-        resultState[i + 1][j] -= 1;
-        resultState[i - 1][j] -= 1;
-        resultState[i][j + 1] -= 1;
-        resultState[i][j - 1] -= 1;
-        resultState[i + 1][j + 1] -= 1;
-        resultState[i + 1][j - 1] -= 1;
-        resultState[i - 1][j + 1] -= 1;
-        resultState[i - 1][j - 1] -= 1;
+    private void decrementNeighbor(int currentX, int currentY) {
+        int length = resultState.length - 1;
+        int heigth = resultState[0].length - 1;
+        int neighborX = (currentX < 0 ? length - 1 : currentX == length ? 0 : currentX);
+        int neighborY = (currentY < 0 ? heigth - 1 : currentY == heigth ? 0 : currentY);
+        resultState[neighborX][neighborY]--;
     }
 
-    private void incrementNeighbours(int i, int j) {
-        resultState[i + 1][j] += 1;
-        resultState[i - 1][j] += 1;
-        resultState[i][j + 1] += 1;
-        resultState[i][j - 1] += 1;
-        resultState[i + 1][j + 1] += 1;
-        resultState[i + 1][j - 1] += 1;
-        resultState[i - 1][j + 1] += 1;
-        resultState[i - 1][j - 1] += 1;
+    private void incrementNeighbor(int currentX, int currentY) {
+        int length = resultState.length - 1;
+        int heigth = resultState[0].length - 1;
+        int neighborX = (currentX < 0 ? length - 1 : currentX == length ? 0 : currentX);
+        int neighborY = (currentY < 0 ? heigth - 1 : currentY == heigth ? 0 : currentY);
+        resultState[neighborX][neighborY]++;
     }
 }
