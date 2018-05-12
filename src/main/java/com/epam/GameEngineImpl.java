@@ -3,52 +3,23 @@ package com.epam;
 public class GameEngineImpl implements GameEngine {
 
     public static void main(String[] args) {
-        GameEngineImpl gameEngine = new GameEngineImpl();
+        GameEngine engine = new GameEngineImpl();
         boolean[][] initialState = {
-                {true, true, false, false, false},
-                {false, true, false, false, false},
-                {false, false, false, true, false},
-                {false, false, true, false, false},
-                {false, false, false, true, false}
+                {false, false, false, false, false},
+                {false, true,  false, true, false},
+                {false, true, false, true, false},
+                {false, false, true,  false, true},
+                {false, false, false, false, false}
         };
-
-        byte[][] byteArray = gameEngine.parse(initialState);
-
-
-        for (int x = 0; x < byteArray.length; x++) {
-            for (int y = 0; y < byteArray[x].length; y++) {
-                System.out.print(byteArray[x][y] + "\t");
-            }
-            System.out.println();
-        }
-
-        initialState = gameEngine.parse(byteArray);
-
-        for (int x = 0; x < initialState.length; x++) {
-            for (int y = 0; y < initialState[x].length; y++) {
-                System.out.print(initialState[x][y] + "\t");
-            }
-            System.out.println();
-        }
-    }
-
-    private boolean[][] parse(byte[][] byteArray) {
-        boolean[][] array = new boolean[byteArray.length][byteArray[0].length];
-        for (int x = 0; x < array.length; x++) {
-            for (int y = 0; y < array[x].length; y++) {
-                if(byteArray[x][y] > 100){
-                    array[x][y] = true;
-                }
-            }
-        }
-        return array;
+        engine.compute(initialState, 4);
     }
 
     @Override
     public boolean[][] compute(boolean[][] initialState, int numberIterations) {
-        byte[][] startState = parse(initialState);
+        MatrixIterator iterator = new MatrixIterator();
 
-        byte[][] resultState = MatrixIterator.iterateMatrix(startState, numberIterations);
+        byte[][] startState = parse(initialState);
+        byte[][] resultState = iterator.iterateMatrix(startState, numberIterations);
 
         return parse(resultState);
     }
@@ -57,7 +28,7 @@ public class GameEngineImpl implements GameEngine {
         boolean[][] array = new boolean[byteArray.length][byteArray[0].length];
         for (int x = 0; x < array.length; x++) {
             for (int y = 0; y < array[x].length; y++) {
-                if(byteArray[x][y] > 100){
+                if(byteArray[x][y] >= 100){
                     array[x][y] = true;
                 }
             }
@@ -74,7 +45,7 @@ public class GameEngineImpl implements GameEngine {
 
         for (int x = 0; x < array.length; x++) {
             for (int y = 0; y < array[x].length; y++) {
-                if (array[x][y] == true) {
+                if (array[x][y]) {
                     byteArray[x][y] += 100;
                     incrementNeighbor(byteArray, x - 1, y - 1, height, weight);
                     incrementNeighbor(byteArray, x, y - 1, height, weight);

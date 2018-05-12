@@ -2,71 +2,75 @@ package com.epam;
 
 public class MatrixIterator {
 
-    private static byte[][] resultState;
-
-    public static byte[][] iterateMatrix(byte[][] startState, int iterations) {
-
-        resultState = startState.clone();
-
-        for (int i = 0; i < iterations; i++) {
-            iterate(startState);
-            startState = resultState.clone();
+    public byte[][] iterateMatrix(byte[][] startState, Integer countOfIteration) {
+        System.out.println("Original");
+        print(startState);
+        System.out.println();
+        for(int i = 0; i<countOfIteration; i++){
+            startState = iterate(startState);
+            System.out.println("Iterate "+(i+1));
+            print(startState);
+            System.out.println();
         }
-
-        return resultState;
+        return startState;
     }
 
-    private static void iterate(byte[][] startState) {
-        for (int i = 0; i < startState.length; i++) {
-            for (int j = 0; j < startState[0].length; j++) {
-                if (startState[i][j] == 3) {
-                    resultState[i][j] += 100;
-                    incrementNeighbor(i - 1, j - 1);
-                    incrementNeighbor(i, j - 1);
-                    incrementNeighbor(i + 1, j - 1);
-                    incrementNeighbor(i - 1, j);
-                    incrementNeighbor(i + 1, j);
-                    incrementNeighbor(i - 1, j + 1);
-                    incrementNeighbor(i, j + 1);
-                    incrementNeighbor(i + 1, j + 1);
-                } else if (startState[i][j] > 103) {
-                    resultState[i][j] -= 100;
-                    decrementNeighbor(i - 1, j - 1);
-                    decrementNeighbor(i, j - 1);
-                    decrementNeighbor(i + 1, j - 1);
-                    decrementNeighbor(i - 1, j);
-                    decrementNeighbor(i + 1, j);
-                    decrementNeighbor(i - 1, j + 1);
-                    decrementNeighbor(i, j + 1);
-                    decrementNeighbor(i + 1, j + 1);
-                } else if (startState[i][j] > 100 && startState[i][j] < 102) {
-                    resultState[i][j] -= 100;
-                    decrementNeighbor(i - 1, j - 1);
-                    decrementNeighbor(i, j - 1);
-                    decrementNeighbor(i + 1, j - 1);
-                    decrementNeighbor(i - 1, j);
-                    decrementNeighbor(i + 1, j);
-                    decrementNeighbor(i - 1, j + 1);
-                    decrementNeighbor(i, j + 1);
-                    decrementNeighbor(i + 1, j + 1);
+    private void print(byte[][] arr){
+        for (byte[] anArr : arr) {
+            for (byte anAnArr : anArr) {
+                System.out.print(anAnArr + "\t");
+            }
+            System.out.println();
+        }
+    }
+
+    private byte[][] iterate(byte[][] currentState){
+
+        int height = currentState.length;
+        int weight = currentState[0].length;
+
+        byte[][] clone = currentState.clone();
+        for (int i = 0; i < clone.length; i++) {
+            clone[i] = currentState[i].clone();
+        }
+        for(int x=0; x<currentState.length; x++){
+            for(int y=0; y<currentState[0].length; y++){
+                if(currentState[x][y] == 3){
+                    clone[x][y]+=100;
+                    incrementNeighbor(clone, x - 1, y - 1, height, weight);
+                    incrementNeighbor(clone, x, y - 1, height, weight);
+                    incrementNeighbor(clone, x + 1, y - 1, height, weight);
+                    incrementNeighbor(clone, x - 1, y, height, weight);
+                    incrementNeighbor(clone, x + 1, y, height, weight);
+                    incrementNeighbor(clone, x - 1, y + 1, height, weight);
+                    incrementNeighbor(clone, x, y + 1, height, weight);
+                    incrementNeighbor(clone, x + 1, y + 1, height, weight);
+                }
+                else if(currentState[x][y] > 103 || (currentState[x][y] >= 100 && currentState[x][y] < 102)){
+                    clone[x][y]-=100;
+                    decrementNeighbor(clone, x - 1, y - 1, height, weight);
+                    decrementNeighbor(clone, x, y - 1, height, weight);
+                    decrementNeighbor(clone, x + 1, y - 1, height, weight);
+                    decrementNeighbor(clone, x - 1, y, height, weight);
+                    decrementNeighbor(clone, x + 1, y, height, weight);
+                    decrementNeighbor(clone, x - 1, y + 1, height, weight);
+                    decrementNeighbor(clone, x, y + 1, height, weight);
+                    decrementNeighbor(clone, x + 1, y + 1, height, weight);
                 }
             }
         }
+        return clone;
     }
 
-    private static void decrementNeighbor(int currentX, int currentY) {
-        int length = resultState.length - 1;
-        int heigth = resultState[0].length - 1;
-        int neighborX = (currentX < 0 ? length - 1 : currentX == length ? 0 : currentX);
-        int neighborY = (currentY < 0 ? heigth - 1 : currentY == heigth ? 0 : currentY);
-        resultState[neighborX][neighborY]--;
+    private void incrementNeighbor(byte[][] arr, int currentX, int currentY, int height, int weight) {
+        int neighborX = (currentX < 0 ? height - 1 : currentX == height ? 0 : currentX);
+        int neighborY = (currentY < 0 ? weight - 1 : currentY == weight ? 0 : currentY);
+        arr[neighborX][neighborY]++;
+    }
+    private void decrementNeighbor(byte[][] arr, int currentX, int currentY, int height, int weight) {
+        int neighborX = (currentX < 0 ? height - 1 : currentX == height ? 0 : currentX);
+        int neighborY = (currentY < 0 ? weight - 1 : currentY == weight ? 0 : currentY);
+        arr[neighborX][neighborY]--;
     }
 
-    private static void incrementNeighbor(int currentX, int currentY) {
-        int length = resultState.length - 1;
-        int heigth = resultState[0].length - 1;
-        int neighborX = (currentX < 0 ? length - 1 : currentX == length ? 0 : currentX);
-        int neighborY = (currentY < 0 ? heigth - 1 : currentY == heigth ? 0 : currentY);
-        resultState[neighborX][neighborY]++;
-    }
 }

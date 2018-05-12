@@ -2,7 +2,7 @@ package com.epam;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class GameEngineBasisConfigurationsTest {
 
@@ -29,7 +29,7 @@ class GameEngineBasisConfigurationsTest {
                 {false, false, false, false, false}
         };
 
-        assertEquals(expectedState, result);
+        assertArrayEquals(expectedState, result);
     }
 
     @Test
@@ -47,13 +47,13 @@ class GameEngineBasisConfigurationsTest {
 
         boolean[][] expectedState = {
                 {false, false, false, false, false},
-                {false, false,  false, false, false},
+                {false, false,  true, false, false},
                 {true,  true, false, true, false},
-                {false, true, true,  true, false},
+                {false, true, false,  true, false},
                 {false, false, true, false, false}
         };
 
-        assertEquals(expectedState, result);
+        assertArrayEquals(expectedState, result);
 
 
     }
@@ -72,14 +72,14 @@ class GameEngineBasisConfigurationsTest {
         boolean[][] result = gameEngine.compute(initialState, numberIterations);
 
         boolean[][] expectedState = {
-                {true, false, false, true, false, false, true},
+                {true, false, false, true, false, true, true},
                 {true, false, false, false, false, false, true},
                 {false, false, false, false, false, false, false},
-                {false, false, false, true, false, false, false},
-                {false, false, true, true, true, false, false}
+                {false, false, true, false, true, false, false},
+                {false, false, false, true, false, false, false}
         };
 
-        assertEquals(expectedState, result);
+        assertArrayEquals(expectedState, result);
     }
 
     @Test
@@ -92,7 +92,7 @@ class GameEngineBasisConfigurationsTest {
                 {false, false, false, true, true, false, false},
                 {false, false, false, false, false, false, false}
         };
-        int numberIterations = 33;
+        int numberIterations = 3;
 
         boolean[][] result = gameEngine.compute(initialState, numberIterations);
 
@@ -105,7 +105,7 @@ class GameEngineBasisConfigurationsTest {
                 {false, false, false, false, false, false, false}
         };
 
-        assertEquals(expectedState, result);
+        assertArrayEquals(expectedState, result);
 
     }
 
@@ -117,7 +117,7 @@ class GameEngineBasisConfigurationsTest {
                 {true, true, true}
         };
 
-        int numberIterations = 55;
+        int numberIterations = 3;
 
         boolean[][] result = gameEngine.compute(initialState, numberIterations);
 
@@ -127,6 +127,6 @@ class GameEngineBasisConfigurationsTest {
                 {false, false, false}
         };
 
-        assertEquals(expectState, result);
+        assertArrayEquals(expectState, result);
     }
 }
