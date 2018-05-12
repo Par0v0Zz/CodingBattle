@@ -26,6 +26,18 @@ public class GameEngineImpl implements GameEngine {
         }
     }
 
+    private boolean[][] parse(byte[][] byteArray) {
+        boolean[][] array = new boolean[byteArray.length][byteArray[0].length];
+        for (int x = 0; x < array.length; x++) {
+            for (int y = 0; y < array[x].length; y++) {
+                if(byteArray[x][y] > 100){
+                    array[x][y] = true;
+                }
+            }
+        }
+        return array;
+    }
+    
     private byte[][] parse(boolean[][] array) {
 
         int height = array.length;
