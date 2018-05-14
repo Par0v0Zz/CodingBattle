@@ -3,25 +3,10 @@ package com.epam;
 public class MatrixIterator {
 
     public byte[][] iterateMatrix(byte[][] startState, Integer countOfIteration) {
-        System.out.println("Original");
-        print(startState);
-        System.out.println();
         for(int i = 0; i<countOfIteration; i++){
             startState = iterate(startState);
-            System.out.println("Iterate "+(i+1));
-            print(startState);
-            System.out.println();
         }
         return startState;
-    }
-
-    private void print(byte[][] arr){
-        for (byte[] anArr : arr) {
-            for (byte anAnArr : anArr) {
-                System.out.print(anAnArr + "\t");
-            }
-            System.out.println();
-        }
     }
 
     private byte[][] iterate(byte[][] currentState){
