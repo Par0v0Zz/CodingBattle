@@ -2,18 +2,6 @@ package com.epam;
 
 public class GameEngineImpl implements GameEngine {
 
-    public static void main(String[] args) {
-        GameEngine engine = new GameEngineImpl();
-        boolean[][] initialState = {
-                {false, false, false, false, false},
-                {false, true,  false, true, false},
-                {false, true, false, true, false},
-                {false, false, true,  false, true},
-                {false, false, false, false, false}
-        };
-        engine.compute(initialState, 4);
-    }
-
     @Override
     public boolean[][] compute(boolean[][] initialState, int numberIterations) {
         MatrixIterator iterator = new MatrixIterator();
